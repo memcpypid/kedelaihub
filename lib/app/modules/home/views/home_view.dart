@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kedelai_hub/app/modules/components/bottom_navigation.dart';
 import '../controllers/home_controller.dart';
+// import '../components/bottom_navigation.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -8,8 +10,9 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
+        shadowColor: Colors.white,
+        surfaceTintColor: Colors.white,
         title: const Text(
           'KEDELAI HUB',
           style: TextStyle(fontWeight: FontWeight.bold),
@@ -18,8 +21,9 @@ class HomeView extends GetView<HomeController> {
         centerTitle: false,
         backgroundColor: Colors.white,
         elevation: 0,
-        foregroundColor: Colors.black,
+        //foregroundColor: Colors.black,
       ),
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -77,28 +81,21 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notification',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
+      bottomNavigationBar: BottomNavigationBarComponent(
+        currentIndex: 0, // Set the current selected index
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Get.toNamed('/home');
+              break;
+            case 3:
+              Get.toNamed('/profile');
+              break;
+            default:
+          }
+          // Handle tap events to switch screens
+          print('Cek Index: $index');
+        },
       ),
     );
   }
@@ -119,7 +116,7 @@ class HomeView extends GetView<HomeController> {
       child: Align(
         alignment: Alignment.bottomLeft,
         child: Padding(
-          padding: const EdgeInsets.all(8.0), // Add padding if needed
+          padding: const EdgeInsets.all(8.0),
           child: Text(
             title,
             style: const TextStyle(

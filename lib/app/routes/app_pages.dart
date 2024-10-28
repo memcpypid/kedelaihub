@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:kedelai_hub/app/modules/profile/bindings/profile_binding.dart';
+import 'package:kedelai_hub/app/modules/profile/views/profile_view.dart';
 import 'package:kedelai_hub/app/modules/register/bindings/register_binding.dart';
 import 'package:kedelai_hub/app/modules/register/views/register_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -29,6 +31,11 @@ class AppPages {
       name: _Paths.REGISTER,
       page: () => const RegisterView(),
       binding: RegisterBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => ProfileView(),
+      binding: ProfileBinding(),
     ),
   ];
 }
