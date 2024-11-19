@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kedelai_hub/app/modules/auth/auth_controller.dart';
+import '../../../auth/auth_controller.dart';
 import 'package:kedelai_hub/app/modules/components/bottom_navigation.dart';
 import 'package:kedelai_hub/app/modules/profile/controllers/profile_controller.dart';
 

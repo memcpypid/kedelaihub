@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kedelai_hub/app/modules/auth/auth_controller.dart';
+import '../../../auth/auth_controller.dart';
 
 class LoginController extends GetxController {
   final emailController = TextEditingController();
