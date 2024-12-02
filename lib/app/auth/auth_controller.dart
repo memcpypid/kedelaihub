@@ -29,6 +29,7 @@ class AuthController extends GetxController {
         password: password,
       );
       _prefs.setString('user_token', _auth.currentUser!.uid);
+
       Get.snackbar(
         'Success',
         'Registration successful', /*backgroundColor: Colors.grey*/

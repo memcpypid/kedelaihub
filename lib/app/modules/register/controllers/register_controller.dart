@@ -3,11 +3,16 @@ import 'package:get/get.dart';
 import '../../../auth/auth_controller.dart';
 
 class RegisterController extends GetxController {
+  final firstNameController = TextEditingController(); // Nama Depan
+  final lastNameController = TextEditingController(); // Nama Belakang
+
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  RxBool isPasswordVisible = false.obs; // Variabel reaktif
   final AuthController _authController = Get.put(AuthController());
-
+  final dateOfBirthController = TextEditingController(); // Untuk Tanggal Lahir
+  var selectedRole = 'Penjual'.obs; // Untuk role
   void Register() async {
     String username = usernameController.text.trim();
     String email = emailController.text.trim();

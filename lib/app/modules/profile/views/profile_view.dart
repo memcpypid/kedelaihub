@@ -146,10 +146,10 @@ class ProfileView extends GetView<ProfileController> {
         onTap: (index) {
           switch (index) {
             case 0:
-              Get.toNamed('/home');
+              Get.offAndToNamed('/home');
               break;
             case 3:
-              Get.toNamed('/profile');
+              Get.offAndToNamed('/profile');
               break;
             default:
           }

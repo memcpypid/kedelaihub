@@ -35,9 +35,23 @@ class RegisterView extends GetView<RegisterController> {
               child: Column(
                 children: [
                   TextField(
-                    controller: controller.usernameController,
+                    controller: controller.firstNameController,
                     decoration: InputDecoration(
-                      hintText: 'Username',
+                      hintText: 'Nama Depan',
+                      border: InputBorder.none,
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  TextField(
+                    controller: controller.lastNameController,
+                    decoration: InputDecoration(
+                      hintText: 'Nama Belakang',
                       border: InputBorder.none,
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey),
@@ -62,17 +76,84 @@ class RegisterView extends GetView<RegisterController> {
                     ),
                   ),
                   const SizedBox(height: 20),
+                  Obx(
+                    () => TextField(
+                      controller: controller.passwordController,
+                      obscureText: !controller.isPasswordVisible.value,
+                      decoration: InputDecoration(
+                        hintText: 'Password',
+                        suffixIcon: Obx(() => IconButton(
+                              icon: Icon(
+                                controller.isPasswordVisible.value
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                controller.isPasswordVisible.toggle();
+                              },
+                            )),
+                        border: InputBorder.none,
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  // Tanggal Lahir
                   TextField(
-                    controller: controller.passwordController,
-                    obscureText: true,
+                    controller: controller.dateOfBirthController,
+                    readOnly: true,
                     decoration: InputDecoration(
-                      hintText: 'Password',
-                      border: InputBorder.none,
+                      hintText: 'Tanggal Lahir',
+                      suffixIcon: Icon(Icons.calendar_today),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue),
+                      ),
+                    ),
+                    onTap: () async {
+                      DateTime? selectedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime.now(),
+                      );
+                      if (selectedDate != null) {
+                        controller.dateOfBirthController.text =
+                            selectedDate.toLocal().toString().split(' ')[0];
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  // Role Selection
+                  Obx(
+                    () => DropdownButtonFormField<String>(
+                      value: controller.selectedRole.value,
+                      items: ['Penjual', 'Pembeli']
+                          .map(
+                            (role) => DropdownMenuItem<String>(
+                              value: role,
+                              child: Text(role),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        controller.selectedRole.value = value!;
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Pilih Role',
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),
                       ),
                     ),
                   ),
@@ -108,28 +189,6 @@ class RegisterView extends GetView<RegisterController> {
                       ),
               );
             }),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     controller.Register();
-            //   },
-            //   style: ElevatedButton.styleFrom(
-            //     backgroundColor: const Color.fromRGBO(158, 158, 158, 1),
-            //     padding:
-            //         const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
-            //     textStyle: const TextStyle(
-            //       fontSize: 18,
-            //       fontWeight: FontWeight.bold,
-            //       color: Colors.white,
-            //     ),
-            //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.circular(10),
-            //     ),
-            //   ),
-            //   child: const Text(
-            //     'REGISTER',
-            //     style: TextStyle(color: Colors.white),
-            //   ),
-            // ),
             const SizedBox(height: 20),
             TextButton(
               onPressed: () {
