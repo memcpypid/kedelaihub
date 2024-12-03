@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kedelai_hub/app/modules/components/bottom_navigation.dart';
+import 'package:kedelai_hub/app/modules/components/cart_view.dart';
+import 'package:kedelai_hub/app/modules/components/notification_view.dart';
+import 'package:kedelai_hub/app/modules/components/stock_product.dart';
+import 'package:kedelai_hub/app/modules/components/tracking_order_view.dart';
 import '../controllers/home_controller.dart';
 // import '../components/bottom_navigation.dart';
 
@@ -71,10 +75,18 @@ class HomeView extends GetView<HomeController> {
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
                 children: [
-                  _buildGridItem('Tracking Order', 'assets/images/kedelai.png'),
-                  _buildGridItem('Stock Product', 'assets/images/kedelai.png'),
-                  _buildGridItem('Bulk Package', 'assets/images/kedelai.png'),
-                  _buildGridItem('About Product', 'assets/images/kedelai.png'),
+                  _buildGridItem('Tracking Order', 'assets/images/kedelai.png',
+                      () {
+                    Get.to(() => const TrackingOrderView());
+                  }),
+                  _buildGridItem('Stock Product', 'assets/images/kedelai.png',
+                      () {
+                    Get.to(() => const StockProductView());
+                  }),
+                  _buildGridItem(
+                      'Bulk Package', 'assets/images/kedelai.png', () {}),
+                  _buildGridItem(
+                      'About Product', 'assets/images/kedelai.png', () {}),
                 ],
               ),
             ),
@@ -88,6 +100,12 @@ class HomeView extends GetView<HomeController> {
             case 0:
               Get.offAndToNamed('/home');
               break;
+            case 1:
+              Get.off(() => const CartView());
+              break;
+            case 2:
+              Get.off(() => const NotificationView());
+              break;
             case 3:
               Get.offAndToNamed('/profile');
               break;
@@ -100,28 +118,32 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Widget _buildGridItem(String title, String imagePath) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        image: DecorationImage(
-          image: AssetImage(imagePath),
-          fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(0.2),
-            BlendMode.darken,
+  Widget _buildGridItem(String title, String imagePath, VoidCallback onTap) {
+    return InkWell(
+      onTap: onTap, // Callback ketika item ditekan
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          image: DecorationImage(
+            image: AssetImage(imagePath),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.2),
+              BlendMode.darken,
+            ),
           ),
         ),
-      ),
-      child: Align(
-        alignment: Alignment.bottomLeft,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+        child: Align(
+          alignment: Alignment.bottomLeft,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              title,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),

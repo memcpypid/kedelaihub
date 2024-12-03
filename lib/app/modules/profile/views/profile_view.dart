@@ -7,6 +7,7 @@ import 'package:kedelai_hub/app/modules/profile/controllers/profile_controller.d
 class ProfileView extends GetView<ProfileController> {
   ProfileView({super.key});
   final AuthController _authController = Get.put(AuthController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,121 +27,145 @@ class ProfileView extends GetView<ProfileController> {
         elevation: 0,
       ),
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.grey[300],
-                  child: Icon(Icons.person, color: Colors.black, size: 40),
-                ),
-                const SizedBox(width: 12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      'Darma Putra',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.grey[300],
+                      child: const Icon(Icons.person,
+                          color: Colors.black, size: 40),
                     ),
-                    Text(
-                      'darmaputra443@gmail.com',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
-                      ),
+                    const SizedBox(width: 12),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Obx(
+                          () => Text(
+                            '${controller.firstNameController.value} ${controller.lastNameController.value}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        Obx(
+                          () => Text(
+                            controller.emailController.value,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        Obx(
+                          () => Text(
+                            controller.selectedRole.value,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            const Text(
-              'General',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey,
-              ),
-            ),
-            const Divider(),
-            ListTile(
-              title: const Text('Edit Information'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text('Guide'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text('Transaction History'),
-              onTap: () {},
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Security',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey,
-              ),
-            ),
-            const Divider(),
-            ListTile(
-              title: const Text('Terms and Policy'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text('Security Policy'),
-              onTap: () {},
-            ),
-            //const SizedBox(height: 5),
-            ListTile(
-              title: const Text(
-                'Log Out',
-                style: TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
+                const SizedBox(height: 24),
+                const Text(
+                  'General',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Konfirmasi LogOut'),
-                      content: const Text('Apakah Anda Yakin Ingin Logout?'),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('No'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            _authController.logout();
-                          },
-                          child: const Text('Yes',
-                              style: TextStyle(color: Colors.red)),
-                        ),
-                      ],
+                const Divider(),
+                ListTile(
+                  title: const Text('Edit Information'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: const Text('Guide'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: const Text('Transaction History'),
+                  onTap: () {},
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Security',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
+                  ),
+                ),
+                const Divider(),
+                ListTile(
+                  title: const Text('Terms and Policy'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: const Text('Security Policy'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: const Text(
+                    'Log Out',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Konfirmasi LogOut'),
+                          content:
+                              const Text('Apakah Anda Yakin Ingin Logout?'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('No'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                _authController.logout();
+                              },
+                              child: const Text(
+                                'Yes',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     );
                   },
-                );
-              },
-            )
-          ],
-        ),
-      ),
+                ),
+              ],
+            ),
+          );
+        }
+      }),
       bottomNavigationBar: BottomNavigationBarComponent(
         currentIndex: 3,
         onTap: (index) {
@@ -151,9 +176,7 @@ class ProfileView extends GetView<ProfileController> {
             case 3:
               Get.offAndToNamed('/profile');
               break;
-            default:
           }
-          print('Cek Index $index');
         },
       ),
     );
