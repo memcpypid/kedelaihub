@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kedelai_hub/app/modules/components/bottom_navigation.dart';
 import 'package:kedelai_hub/app/modules/components/cart_view.dart';
+// import 'package:kedelai_hub/app/modules/components/live_chat.dart';
 import 'package:kedelai_hub/app/modules/components/notification_view.dart';
 import 'package:kedelai_hub/app/modules/components/stock_product.dart';
 import 'package:kedelai_hub/app/modules/components/tracking_order_view.dart';
+import 'package:kedelai_hub/app/modules/profile/controllers/profile_controller.dart';
 import '../controllers/home_controller.dart';
 // import '../components/bottom_navigation.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({super.key});
-
+  HomeView({super.key});
+  final ProfileController _profileController = Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,7 +103,13 @@ class HomeView extends GetView<HomeController> {
               Get.offAndToNamed('/home');
               break;
             case 1:
-              Get.off(() => const CartView());
+              print(_profileController.selectedRole);
+              if (_profileController.selectedRole.value == 'Penjual') {
+                Get.toNamed('/livechat');
+              } else {
+                Get.off(() => const CartView());
+              }
+
               break;
             case 2:
               Get.off(() => const NotificationView());

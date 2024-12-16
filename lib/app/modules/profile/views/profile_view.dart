@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kedelai_hub/app/modules/profile/views/edit_information.dart';
 import '../../../auth/auth_controller.dart';
 import 'package:kedelai_hub/app/modules/components/bottom_navigation.dart';
 import 'package:kedelai_hub/app/modules/profile/controllers/profile_controller.dart';
@@ -94,7 +95,9 @@ class ProfileView extends GetView<ProfileController> {
                 const Divider(),
                 ListTile(
                   title: const Text('Edit Information'),
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(() => EditInformationView());
+                  },
                 ),
                 ListTile(
                   title: const Text('Guide'),

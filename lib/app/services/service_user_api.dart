@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ServiceUserApi {
-  static const String baseUrl = 'http://192.168.1.118:5000/api/users';
+  static const String baseUrl = 'http://172.16.2.176:5000/api/users';
 
   Future<void> createUser(String idAuth, String email, String FirstName,
       String LastName, String dateOfBirth, String role) async {
@@ -54,6 +54,21 @@ class ServiceUserApi {
       // Error jaringan atau parsing
       print('Request failed: $e');
       return null;
+    }
+  }
+
+  Future<bool> updateUserByIdAuth(
+      String idAuth, Map<String, dynamic> updatedData) async {
+    final url = Uri.parse('$baseUrl/$idAuth');
+    try {
+      final response = await http.put(
+        url,
+        body: updatedData,
+      );
+      return response.statusCode == 200;
+    } catch (e) {
+      print("Error saat memperbarui data: $e");
+      return false;
     }
   }
 }

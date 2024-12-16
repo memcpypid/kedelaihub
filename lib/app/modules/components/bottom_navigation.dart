@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kedelai_hub/app/auth/auth_controller.dart';
-import 'package:kedelai_hub/app/modules/profile/controllers/profile_controller.dart';
-import 'package:flutter/material.dart';
+// import 'package:kedelai_hub/app/modules/profile/controllers/profile_controller.dart';
+// import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kedelai_hub/app/auth/auth_controller.dart';
+// import 'package:kedelai_hub/app/auth/auth_controller.dart';
 
 class BottomNavigationBarComponent extends StatelessWidget {
   final int currentIndex;

@@ -61,4 +61,41 @@ class ProfileController extends GetxController {
     emailController.value = user.email;
     selectedRole.value = user.role;
   }
+
+  Future<bool> updateUser(Map<String, dynamic> updatedData) async {
+    isLoading.value = true;
+    try {
+      String? id_auth = _prefs.getString('user_token');
+      if (id_auth == null) {
+        print("User token tidak ditemukan");
+        return false;
+      }
+      bool result =
+          await _serviceUserApi.updateUserByIdAuth(id_auth, updatedData);
+      if (result) {
+        // Jika berhasil, perbarui data lokal
+        //  loadUserData(updatedData);
+        return true;
+      } else {
+        print("Gagal memperbarui data user");
+        return false;
+      }
+    } catch (e) {
+      print("Error saat memperbarui data user: $e");
+      return false;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  void initEditControllers(
+      TextEditingController firstNameCtrl,
+      TextEditingController lastNameCtrl,
+      TextEditingController emailCtrl,
+      TextEditingController dateOfBirthCtrl) {
+    firstNameCtrl.text = firstNameController.value;
+    lastNameCtrl.text = lastNameController.value;
+    emailCtrl.text = emailController.value;
+    dateOfBirthCtrl.text = dateOfBirthController.value;
+  }
 }
