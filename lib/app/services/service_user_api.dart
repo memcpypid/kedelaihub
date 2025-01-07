@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ServiceUserApi {
-  static const String baseUrl = 'http://172.16.2.176:5000/api/users';
+  static const String baseUrl = 'http://172.16.2.121:5000/api/users';
 
   Future<void> createUser(String idAuth, String email, String FirstName,
       String LastName, String dateOfBirth, String role) async {
